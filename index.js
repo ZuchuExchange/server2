@@ -6,7 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend'))); // Serve static files from frontend folder
+//app.use(express.static(path.join(__dirname, '../frontend'))); // Serve static files from frontend folder
 
 // Endpoint to initiate STK Push
 app.post('/pay', async (req, res) => {
