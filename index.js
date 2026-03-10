@@ -1,4 +1,3 @@
-
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
@@ -20,7 +19,7 @@ app.post('/pay', async (req, res) => {
   const payload = {
     BusinessShortCode: process.env.CHANNEL_ID,
     TransactionType: "CustomerPayBillOnline",
-    Amount: 1000, // 1 KSH
+    Amount: 1, // 1 KSH
     PartyA: phoneNumber,
     PartyB: process.env.CHANNEL_ID,
     PhoneNumber: phoneNumber,
@@ -30,7 +29,7 @@ app.post('/pay', async (req, res) => {
   };
 
   try {
-    const response = await axios.post('https://api.yourpaymentprovider.com/stkpush', payload, {
+    const response = await axios.post('https://swiftwallet.co.ke/v3/stk-initiate', payload, {
       headers: {
         'Authorization': `Bearer ${process.env.API_KEY}`,
         'Content-Type': 'application/json'
@@ -50,10 +49,7 @@ app.post('/callback', (req, res) => {
   res.status(200).json({ message: 'Callback received' });
 });
 
-// Serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
+// Removed the route that served index.html
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
