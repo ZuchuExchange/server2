@@ -1,15 +1,17 @@
 const express = require('express');
 const axios = require('axios');
-const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
-//app.use(express.static(path.join(__dirname, '../frontend'))); // Serve static files from frontend folder
+app.use(express.urlencoded({ extended: true })); // Needed for form-urlencoded
 
-// Endpoint to initiate STK Push
 app.post('/pay', async (req, res) => {
+  console.log('Received body:', req.body);  // Debug
+
   const { phoneNumber } = req.body;
 
   if (!phoneNumber) {
@@ -19,7 +21,7 @@ app.post('/pay', async (req, res) => {
   const payload = {
     BusinessShortCode: process.env.CHANNEL_ID,
     TransactionType: "CustomerPayBillOnline",
-    Amount: 1, // 1 KSH
+    Amount: 1,
     PartyA: phoneNumber,
     PartyB: process.env.CHANNEL_ID,
     PhoneNumber: phoneNumber,
@@ -42,14 +44,10 @@ app.post('/pay', async (req, res) => {
   }
 });
 
-// Callback endpoint
 app.post('/callback', (req, res) => {
-  const payload = req.body;
-  console.log('Callback received:', payload);
+  console.log('Callback received:', req.body);
   res.status(200).json({ message: 'Callback received' });
 });
-
-// Removed the route that served index.html
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
