@@ -6,22 +6,29 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Needed for form-urlencoded
+app.use(express.json()); // Parses JSON request bodies
+app.use(express.urlencoded({ extended: true })); // Parses URL-encoded data
 
 app.post('/pay', async (req, res) => {
-  console.log('Received body:', req.body);  // Debug
+  console.log('Received body:', req.body); // Debug
 
-  const { phoneNumber } = req.body;
+  const { phoneNumber, amount } = req.body;
 
+  // Validate phoneNumber
   if (!phoneNumber) {
     return res.status(400).json({ success: false, message: 'Phone number is required' });
+  }
+
+  // Validate amount
+  const parsedAmount = parseFloat(amount);
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    return res.status(400).json({ success: false, message: 'A valid amount is required' });
   }
 
   const payload = {
     BusinessShortCode: process.env.CHANNEL_ID,
     TransactionType: "CustomerPayBillOnline",
-    Amount: 1,
+    Amount: parsedAmount,
     PartyA: phoneNumber,
     PartyB: process.env.CHANNEL_ID,
     PhoneNumber: phoneNumber,
